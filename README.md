@@ -15,3 +15,32 @@ Make sure you have the following installed on your system:
 ```sh
 git clone <repository-url>
 cd bhc-backend-app
+```
+
+### Install dependencies
+```sh
+npm install
+```
+
+### Environment Variables
+```sh
+FIREBASE_API_KEY=your_firebase_api_key
+```
+
+### Start the server
+
+#### Scripts
+* 'start': Runs the server using Node.js
+* 'dev': Runs the server using Nodemon for automatic restarts on file changes
+
+* For production:
+```sh
+npm start
+```
+* For development with live reloading:
+```sh
+npm run dev
+```
+
+### Author
+Tsogang Mosweswe
