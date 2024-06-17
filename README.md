@@ -13,7 +13,7 @@ Make sure you have the following installed on your system:
 
 ### Clone the repository
 ```sh
-git clone <repository-url>
+git clone [<repository-url>](https://github.com/PolaroidZone/bhc-backend-app.git)
 cd bhc-backend-app
 ```
 
