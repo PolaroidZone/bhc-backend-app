@@ -1,11 +1,16 @@
-const { signInWithEmailAndPassword } = require("../config/config");
+const { signInWithEmailAndPassword } = require("firebase/auth");
+const { auth } = require("../config/config");
 
 async function emailLoginUser(email, password) {
   try {
-    const userCredential = await signInWithEmailAndPassword(email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential.user;
   } catch (error) {
-    console.error(error);
+    console.error("Error during sign-in:", error.message);
     throw error;
   }
 }

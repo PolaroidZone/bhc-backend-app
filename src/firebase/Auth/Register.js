@@ -1,8 +1,10 @@
-const { createUserWithEmailAndPassword } = require("../config/config");
+const { auth } = require("../config/config");
+const { createUserWithEmailAndPassword } = require("firebase/auth");
 
 async function emailRegisterUser(email, password) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
+      auth,
       email,
       password
     );

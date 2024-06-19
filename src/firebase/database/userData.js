@@ -1,22 +1,45 @@
-const { default: firebase } = require("firebase/compat/app");
+const {
+  collection,
+  updateDoc,
+  deleteDoc,
+  doc,
+  addDoc,
+  where,
+  query,
+  getDocs,
+  limit,
+} = require("firebase/firestore");
 const { db } = require("../config/config");
 
 async function storeUserData(uid, user) {
+  const colllectionName = "users";
   try {
-    await db.collection("users").doc(uid).set(user);
-    return true;
+    const ref = await addDoc(collection(db, colllectionName), user);
+    return ref;
   } catch (error) {
-    console.log("Error storing user data", error.message);
-    throw error;
+    console.error("Error adding user to database:", error);
   }
 }
 
 async function getUserData(uid) {
   try {
-    const user = await db.collection("users").doc(uid).get();
-    return user.data();
+    const userQuery = query(
+      collection(db, "users"),
+      where("uid", "==", uid),
+      limit(1)
+    );
+
+    const userSnapshot = await getDocs(userQuery);
+
+    if (userSnapshot.empty) {
+      console.log("Store not found");
+      return null;
+    } else {
+      const userDoc = userSnapshot.docs[0];
+      return userDoc.data();
+    }
   } catch (error) {
-    console.log("Error getting user data", error.message);
+    console.error("Error getting user");
     throw error;
   }
 }
