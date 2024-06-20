@@ -19,13 +19,7 @@ router.get("/", isUser, async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  const dbUser = await getUserData(uid);
-
-  if (!dbUser) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  res.status(200).json({ dbUser });
+  res.status(200).json({ user });
 });
 
 module.exports = router;
