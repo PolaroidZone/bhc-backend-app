@@ -2,7 +2,7 @@ const express = require("express");
 const { auth, signOut } = require("../firebase/config/config");
 const { emailLoginUser } = require("../firebase/Auth/Login");
 const { emailRegisterUser } = require("../firebase/Auth/Register");
-const { storeUserData } = require("../firebase/database/userData");
+const { storeUserData, getUserData } = require("../firebase/database/userData");
 
 const router = express.Router();
 
@@ -13,6 +13,7 @@ const isUser = (req, res, next) => {
   }
   next();
 };
+
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
 
@@ -25,11 +26,20 @@ router.post("/", async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    res.status(200).json({ user });
+
+    const userData = await getUserData(user.uid);
+
+    if (!userData) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ user: userData });
+    
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 router.post("/register", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

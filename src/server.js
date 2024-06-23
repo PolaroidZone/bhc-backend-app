@@ -15,10 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("./routes/Auth");
 const account = require("./routes/Account");
+const house = require("./routes/House");
 
 //Server routes
-app.get("/", (req, res) => res.send("Hello BHC hackathon!"));
+app.get("", (req, res) => res.send("Hello BHC hackathon!"));
 app.use("/auth", auth);
 app.use("/account", account);
+app.use("/house", house);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
